@@ -1,3 +1,5 @@
+import type { TaskFormValues } from 'shared/lib/TaskFormContext.tsx';
+
 export type Task = {
   id: number;
   title: string;
@@ -14,10 +16,5 @@ export type Task = {
   };
 };
 
-export type CreateTaskDto = {
-  assigneeId: number;
-  boardId: number;
-  description: string;
-  priority: 'Low' | 'Medium' | 'High';
-  title: string;
-};
+export type CreateTaskDto = Omit<TaskFormValues, 'status'>;
+export type UpdateTaskDto = Omit<TaskFormValues, 'boardId'>;

@@ -6,6 +6,7 @@ import { TextField } from '@mui/material';
 import { TaskFilters } from 'features/task/ui/TaskFilters.tsx';
 import { useFilteredTasks } from 'features/task/model/useFilteredTasks.ts';
 import { useDebouncedValue } from 'shared/lib/hooks/useDebounce.ts';
+import { CreateTaskButton } from 'features/task/ui/CreateTask.tsx';
 
 const TasksPage = () => {
   const { data: tasks = [] } = useGetTasks();
@@ -16,27 +17,34 @@ const TasksPage = () => {
   const filteredTasks = useFilteredTasks(tasks, filters, debouncedSearch);
 
   return (
-    <PageContent paddingX="px-[40px]" paddingY="pt-[20px]">
-      <div className="flex justify-between items-start gap-4 pt-[20px] mb-6">
-        <div className="w-1/3 shrink-0">
-          <TextField
-            fullWidth
-            variant="outlined"
-            size="small"
-            label="Поиск по названию или исполнителю"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
+    <>
+      <PageContent paddingX="px-[40px]" paddingY="pt-[20px]">
+        <div className="flex justify-between items-start gap-4 pt-[20px] mb-6">
+          <div className="w-1/3 shrink-0">
+            <TextField
+              fullWidth
+              variant="outlined"
+              size="small"
+              label="Поиск по названию или исполнителю"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <TaskFilters
+            tasks={tasks}
+            selectedStatus={filters.status}
+            selectedBoard={filters.boardId}
+            onFilterChange={setFilters}
           />
         </div>
-        <TaskFilters
-          tasks={tasks}
-          selectedStatus={filters.status}
-          selectedBoard={filters.boardId}
-          onFilterChange={setFilters}
-        />
+        <TaskList tasks={filteredTasks} />
+      </PageContent>
+
+      {/* Фиксированная кнопка */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <CreateTaskButton variant="contained" color="secondary" />
       </div>
-      <TaskList tasks={filteredTasks} />
-    </PageContent>
+    </>
   );
 };
 

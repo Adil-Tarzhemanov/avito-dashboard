@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import {
   taskFormContext,
   type TaskFormParams,
@@ -6,7 +6,7 @@ import {
 } from 'shared/lib/TaskFormContext.tsx';
 import { TaskModal } from './TaskModal.tsx';
 
-export const TaskFormProvider = ({ children }: { children: React.ReactNode }) => {
+export const TaskFormProvider = ({ children }: { children: ReactNode }) => {
   const [params, setParams] = useState<TaskFormParams | null>(null);
   const [resolver, setResolver] = useState<(data: TaskFormValues | null) => void>();
 

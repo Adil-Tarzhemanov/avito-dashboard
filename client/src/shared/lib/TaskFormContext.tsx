@@ -1,7 +1,5 @@
 import { createStrictContext, useStrictContext } from 'shared/lib/React';
 
-export type TaskFormMode = 'create' | 'edit';
-
 export type TaskFormParams = {
   mode: 'create' | 'edit';
   initialValues?: Partial<TaskFormValues>;
@@ -9,12 +7,13 @@ export type TaskFormParams = {
 };
 
 export type TaskFormValues = {
+  id?: number;
   title: string;
   description: string;
-  boardId: string;
+  boardId: string | number;
   priority: string;
   status: string;
-  assigneeId: string;
+  assigneeId: string | number;
 };
 
 export type TaskFormContext = {

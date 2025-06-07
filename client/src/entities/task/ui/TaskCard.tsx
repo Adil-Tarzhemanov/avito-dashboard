@@ -1,13 +1,27 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import type { Task } from 'entities/task/model/types.ts';
+import { setCurrentTask } from 'entities/task/model/editTaskSlice.ts';
+import { useTaskForm } from 'shared/lib/TaskFormContext.tsx';
+import { normalizeTaskToFormValues } from 'entities/task/lib/normalizeTaskToFormValues.ts';
 
 interface TaskCardProps {
   task: Task;
 }
 
 export const TaskCard = ({ task }: TaskCardProps) => {
+  const openForm = useTaskForm();
+
+  const handleClick = async () => {
+    setCurrentTask(task);
+    await openForm({
+      mode: 'edit',
+      origin: 'tasks',
+      initialValues: normalizeTaskToFormValues(task),
+    });
+  };
+
   return (
-    <Card variant="outlined" sx={{ mb: 2 }}>
+    <Card variant="outlined" sx={{ mb: 2 }} onClick={handleClick}>
       <CardContent sx={{ position: 'relative' }}>
         {/* boardName в правом верхнем углу */}
         {task.boardName && (

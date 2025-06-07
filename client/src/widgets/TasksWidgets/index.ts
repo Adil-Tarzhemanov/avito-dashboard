@@ -1,2 +1,2 @@
 export * from './ui/TaskFormProvider.tsx';
-export * from './ui/TaskModal';
+export * from './ui/TaskModal.tsx';

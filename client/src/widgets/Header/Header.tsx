@@ -1,20 +1,9 @@
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { useTaskForm } from 'shared/lib/TaskFormContext';
+import { Link as RouterLink } from 'react-router-dom';
 import { RoutesPath } from 'app/router/routeConfig.tsx';
+import { CreateTaskButton } from 'features/task/ui/CreateTask.tsx';
 
 export const Header = () => {
-  const navigate = useNavigate();
-  const openForm = useTaskForm();
-
-  const handleCreate = async () => {
-    await openForm({
-      mode: 'create',
-      origin: 'tasks',
-      initialValues: {},
-    });
-  };
-
   return (
     <AppBar position="static">
       <Toolbar>
@@ -23,15 +12,13 @@ export const Header = () => {
         </Typography>
 
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <Button color="inherit" onClick={() => navigate(RoutesPath.tasks)}>
+          <Button component={RouterLink} to={RoutesPath.tasks} color="inherit">
             Все задачи
           </Button>
-          <Button color="inherit" onClick={() => navigate(RoutesPath.boards)}>
+          <Button component={RouterLink} to={RoutesPath.boards} color="inherit">
             Все доски
           </Button>
-          <Button color="inherit" variant="outlined" onClick={handleCreate}>
-            Создать задачу
-          </Button>
+          <CreateTaskButton />
         </Box>
       </Toolbar>
     </AppBar>
