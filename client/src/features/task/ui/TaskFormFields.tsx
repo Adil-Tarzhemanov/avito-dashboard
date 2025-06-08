@@ -19,6 +19,7 @@ export const TaskFormFields = ({ register, params, boards, users }: Props) => {
 
   return (
     <>
+      {/*//сделать формой и прокинуть всю логику с формой а модалку отделить(в модалку прокинуть форму)*/}
       <TextField
         {...register('title', { required: true })}
         label="Название"
@@ -26,7 +27,6 @@ export const TaskFormFields = ({ register, params, boards, users }: Props) => {
         margin="dense"
         defaultValue={params.initialValues?.title}
       />
-
       <TextField
         {...register('description')}
         label="Описание"
@@ -36,7 +36,6 @@ export const TaskFormFields = ({ register, params, boards, users }: Props) => {
         rows={4}
         defaultValue={params.initialValues?.description}
       />
-
       {!isFromBoard && (
         <TextField
           {...register('boardId', { valueAsNumber: true })}
@@ -53,7 +52,6 @@ export const TaskFormFields = ({ register, params, boards, users }: Props) => {
           ))}
         </TextField>
       )}
-
       <TextField
         {...register('priority')}
         label="Приоритет"
@@ -68,7 +66,6 @@ export const TaskFormFields = ({ register, params, boards, users }: Props) => {
           </MenuItem>
         ))}
       </TextField>
-
       <TextField
         {...register('status')}
         label="Статус"
@@ -81,7 +78,6 @@ export const TaskFormFields = ({ register, params, boards, users }: Props) => {
         <MenuItem value="Backlog">Backlog</MenuItem>
         <MenuItem value="Done">Done</MenuItem>
       </TextField>
-
       <TextField
         {...register('assigneeId', { valueAsNumber: true })}
         label="Исполнитель"

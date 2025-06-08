@@ -1,24 +1,29 @@
-import { Card, CardContent, Typography } from '@mui/material';
+import { Avatar, Card, CardContent, Typography } from '@mui/material';
 import type { Task } from 'entities/task/model/types.ts';
 import { setCurrentTask } from 'entities/task/model/editTaskSlice.ts';
 import { useTaskForm } from 'shared/lib/TaskFormContext.tsx';
 import { normalizeTaskToFormValues } from 'entities/task/lib/normalizeTaskToFormValues.ts';
+import { stringToColor } from 'shared/lib/utils/stringToColor.ts';
 
 interface TaskCardProps {
   task: Task;
 }
-
+//render props сделать, DI
 export const TaskCard = ({ task }: TaskCardProps) => {
   const openForm = useTaskForm();
 
   const handleClick = async () => {
+    // ОБЯЗАТЕЛЬНО нужно прокинуть onClick, для переиспользования
     setCurrentTask(task);
     await openForm({
       mode: 'edit',
       origin: 'tasks',
-      initialValues: normalizeTaskToFormValues(task),
+      initialValues: normalizeTaskToFormValues(task), //переименовать normalize
     });
   };
+
+  const bgColor = stringToColor(task.boardName);
+  const initial = task.boardName.charAt(0).toUpperCase();
 
   return (
     <Card variant="outlined" sx={{ mb: 2 }} onClick={handleClick}>
@@ -31,15 +36,13 @@ export const TaskCard = ({ task }: TaskCardProps) => {
               position: 'absolute',
               top: 0,
               right: 0,
-              border: '2px solid #1976d2',
               padding: '3px 5px',
               margin: '7px',
-              borderRadius: '4px',
               color: 'text.secondary',
               fontWeight: 500,
             }}
           >
-            {task.boardName}
+            <Avatar sx={{ bgcolor: bgColor }}>{initial}</Avatar>
           </Typography>
         )}
 

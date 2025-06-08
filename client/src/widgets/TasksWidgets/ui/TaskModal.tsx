@@ -13,6 +13,8 @@ export const TaskModal = ({ params, onCancel, onSubmit }: Props) => {
   const { register, handleSubmit, handleFormSubmit, users, boards, boardId, isCreate, isPending } =
     useTaskFormController(params, onSubmit);
 
+  //добавить zod для валидации(длина текста и тд)
+
   return (
     <Dialog open onClose={onCancel} maxWidth="sm" fullWidth>
       <DialogTitle>{isCreate ? 'Создание задачи' : 'Редактирование задачи'}</DialogTitle>
@@ -29,6 +31,7 @@ export const TaskModal = ({ params, onCancel, onSubmit }: Props) => {
           Отмена
         </Button>
         <Button variant="contained" onClick={handleSubmit(handleFormSubmit)} disabled={isPending}>
+          {/*//type submit - кнопка*/}
           {isCreate ? 'Создать' : 'Обновить'}
         </Button>
       </DialogActions>

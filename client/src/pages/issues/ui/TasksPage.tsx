@@ -19,7 +19,11 @@ const TasksPage = () => {
   return (
     <>
       <PageContent paddingX="px-[40px]" paddingY="pt-[20px]">
+        {' '}
+        {/*//закинуть в один пропс*/}
         <div className="flex justify-between items-start gap-4 pt-[20px] mb-6">
+          {' '}
+          {/*//возможно стоит обернуть в tag search вместо div*/}
           <div className="w-1/3 shrink-0">
             <TextField
               fullWidth
@@ -38,10 +42,20 @@ const TasksPage = () => {
           />
         </div>
         <TaskList tasks={filteredTasks} />
+        {/*//сделать renderProps, который возвр JSX(в пропсах прокидывать функцию которая рендерит*/}
+        {/*карточку)*/}
       </PageContent>
 
       {/* Фиксированная кнопка */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
+          zIndex: 50,
+        }}
+      >
+        {/*// пришлось реализовать через инлайн стили, пока не разобрался почему tailwind не сработал*/}
         <CreateTaskButton variant="contained" color="secondary" />
       </div>
     </>
