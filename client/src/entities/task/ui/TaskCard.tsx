@@ -33,6 +33,9 @@ export const TaskCard = ({ task }: TaskCardProps) => {
           <Typography
             variant="caption"
             sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
               position: 'absolute',
               top: 0,
               right: 0,
@@ -42,6 +45,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
               fontWeight: 500,
             }}
           >
+            <Typography>{task.boardName}</Typography>
             <Avatar sx={{ bgcolor: bgColor }}>{initial}</Avatar>
           </Typography>
         )}

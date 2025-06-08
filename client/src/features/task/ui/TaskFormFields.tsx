@@ -4,6 +4,7 @@ import type { TaskFormParams, TaskFormValues } from 'shared/lib/TaskFormContext.
 import type { CreateTaskDto } from 'entities/task/model/types.ts';
 import type { Board } from 'entities/board/model/types.ts';
 import type { User } from 'entities/user/model/types.ts';
+import { matchPath } from 'react-router-dom';
 
 type Props = {
   register: UseFormRegister<TaskFormValues>;
@@ -15,7 +16,7 @@ type Props = {
 const priorities: CreateTaskDto['priority'][] = ['Low', 'Medium', 'High'];
 
 export const TaskFormFields = ({ register, params, boards, users }: Props) => {
-  const isFromBoard = params.origin === 'board';
+  const match = matchPath('/boards/:boardId/*', location.pathname);
 
   return (
     <>
@@ -36,22 +37,21 @@ export const TaskFormFields = ({ register, params, boards, users }: Props) => {
         rows={4}
         defaultValue={params.initialValues?.description}
       />
-      {!isFromBoard && (
-        <TextField
-          {...register('boardId', { valueAsNumber: true })}
-          label="Проект"
-          fullWidth
-          margin="dense"
-          select
-          defaultValue={params.initialValues?.boardId}
-        >
-          {boards.map((board: Board) => (
-            <MenuItem key={board.id} value={board.id}>
-              {board.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      )}
+      <TextField
+        {...register('boardId', { valueAsNumber: true })}
+        label="Проект"
+        fullWidth
+        margin="dense"
+        select
+        disabled={!!match}
+        defaultValue={params.initialValues?.boardId}
+      >
+        {boards.map((board: Board) => (
+          <MenuItem key={board.id} value={board.id}>
+            {board.name}
+          </MenuItem>
+        ))}
+      </TextField>
       <TextField
         {...register('priority')}
         label="Приоритет"
