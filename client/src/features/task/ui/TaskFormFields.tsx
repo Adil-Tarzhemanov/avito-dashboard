@@ -21,7 +21,7 @@ export const TaskFormFields = ({ register, params, boards, users, isCreate }: Pr
 
   return (
     <>
-      {/*//сделать формой и прокинуть всю логику с формой а модалку отделить(в модалку прокинуть форму)*/}
+      {/*//TODO: сделать формой и прокинуть всю логику с формой в модалку и отделить(в модалку прокинуть форму)*/}
       <TextField
         {...register('title', { required: true })}
         label="Название"

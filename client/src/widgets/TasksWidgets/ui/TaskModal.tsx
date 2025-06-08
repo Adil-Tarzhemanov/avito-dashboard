@@ -13,8 +13,9 @@ export const TaskModal = ({ params, onCancel, onSubmit }: Props) => {
   const { register, handleSubmit, handleFormSubmit, users, boards, boardId, isCreate, isPending } =
     useTaskFormController(params, onSubmit);
 
-  //добавить zod для валидации(длина текста и тд)
-  //navigate через windows, потому что вне роутинга
+  //TODO:добавить zod для валидации(длина текста и тд)
+  //TODO: отвязать модалку от таски и сделать её универсальной, думаю можнно useModal() заюзать
+  //TODO: переделать navigate(убрать windows), и переместить BrowserRouter
 
   return (
     <Dialog open onClose={onCancel} maxWidth="sm" fullWidth>

@@ -24,6 +24,8 @@ interface Props {
   children: ReactNode;
 }
 
+//TODO: добавить toaster для оповещений и переработать запросы(сделать стандартизированную функцию для обработки запрсоов, использовать toaster)
+
 export const AppProvider = ({ children }: Props) => {
   return (
     <Provider store={store}>
