@@ -4,6 +4,6 @@ import { api } from 'shared/api/axiosApi';
 export const useGetUsers = () => {
   return useQuery({
     queryKey: ['users'],
-    queryFn: () => api.get('/users').then(res => res.data.data),
+    queryFn: ({ signal }) => api.get('/users', { signal }).then(res => res.data.data),
   });
 };

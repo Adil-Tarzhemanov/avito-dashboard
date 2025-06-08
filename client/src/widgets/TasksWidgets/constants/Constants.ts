@@ -8,3 +8,11 @@ export const defaultConfirmationParams: ConfirmModalParams = {
   onClose: () => {},
   onConfirm: () => {},
 };
+
+export const statuses = ['Backlog', 'InProgress', 'Done'] as const;
+
+export const statusLabels: Record<(typeof statuses)[number], string> = {
+  Backlog: 'Backlog',
+  InProgress: 'In progress',
+  Done: 'Done',
+};

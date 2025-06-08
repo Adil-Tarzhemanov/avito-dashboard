@@ -7,9 +7,9 @@ interface TaskListProps {
 
 export const TaskList = ({ tasks }: TaskListProps) => {
   return (
-    <ul className="pt-[20px]">
+    <ul className="pt-[20px] flex flex-col gap-[20px] pb-[20px]">
       {tasks.map((task: Task) => (
-        <TaskCard key={task.id} task={task} />
+        <TaskCard task={task} key={task.id} />
       ))}
     </ul>
   );

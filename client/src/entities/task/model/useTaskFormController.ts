@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { useGetBoards } from 'entities/board/api/queries/useGetBoards';
+import { useGetBoards } from 'entities/board';
 import { useGetUsers } from 'entities/user/api/queries/useGetUsers';
 import { useCreateTask } from 'entities/task/api/queries/useCreateTask';
 import { useUpdateTask } from 'entities/task/api/queries/useUpdateTask';

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useGetTasks } from 'entities/task/api/queries/useGetTasks.ts';
 import { PageContent } from 'shared/ui/layouts/PageContent.tsx';
 import { TaskList } from 'widgets/TasksWidgets/ui/TaskList.tsx';
@@ -7,37 +6,37 @@ import { TaskFilters } from 'features/task/ui/TaskFilters.tsx';
 import { useFilteredTasks } from 'features/task/model/useFilteredTasks.ts';
 import { useDebouncedValue } from 'shared/lib/hooks/useDebounce.ts';
 import { CreateTaskButton } from 'features/task/ui/CreateTask.tsx';
+import {
+  useTaskFiltersActions,
+  useTaskFiltersState,
+} from 'entities/task/model/taskFiltersSlice.ts';
 
 const TasksPage = () => {
   const { data: tasks = [] } = useGetTasks();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filters, setFilters] = useState({ status: '', boardId: '' });
+  const { search, status, boardId } = useTaskFiltersState();
+  const { setSearch, setFilters } = useTaskFiltersActions();
 
-  const debouncedSearch = useDebouncedValue(searchQuery, 300);
-  const filteredTasks = useFilteredTasks(tasks, filters, debouncedSearch);
+  const debouncedSearch = useDebouncedValue(search, 300);
+  const filteredTasks = useFilteredTasks(tasks, { status, boardId }, debouncedSearch);
 
   return (
     <>
-      <PageContent paddingX="px-[40px]" paddingY="pt-[20px]">
-        {' '}
-        {/*//закинуть в один пропс*/}
+      <PageContent className="px-[40px] pt-[20px]">
         <div className="flex justify-between items-start gap-4 pt-[20px] mb-6">
-          {' '}
-          {/*//возможно стоит обернуть в tag search вместо div*/}
-          <div className="w-1/3 shrink-0">
+          <search className="w-1/3 shrink-0">
             <TextField
               fullWidth
               variant="outlined"
               size="small"
               label="Поиск по названию или исполнителю"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
+              value={search}
+              onChange={e => setSearch(e.target.value)}
             />
-          </div>
+          </search>
           <TaskFilters
             tasks={tasks}
-            selectedStatus={filters.status}
-            selectedBoard={filters.boardId}
+            selectedStatus={status}
+            selectedBoard={boardId}
             onFilterChange={setFilters}
           />
         </div>
@@ -47,6 +46,7 @@ const TasksPage = () => {
       </PageContent>
 
       {/* Фиксированная кнопка */}
+      {/*// пришлось реализовать через инлайн стили, пока не разобрался почему tailwind не сработал*/}
       <div
         style={{
           position: 'fixed',
@@ -55,7 +55,6 @@ const TasksPage = () => {
           zIndex: 50,
         }}
       >
-        {/*// пришлось реализовать через инлайн стили, пока не разобрался почему tailwind не сработал*/}
         <CreateTaskButton variant="contained" color="secondary" />
       </div>
     </>

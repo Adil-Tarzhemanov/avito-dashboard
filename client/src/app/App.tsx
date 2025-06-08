@@ -5,13 +5,9 @@ import { Header } from 'widgets/Header/Header';
 
 export const App = () => {
   return (
-    <div>
-      <Suspense fallback="">
-        <Header />
-        <div className={'content-page'}>
-          <AppRouter />
-        </div>
-      </Suspense>
-    </div>
+    <Suspense fallback="">
+      <Header />
+      <AppRouter />
+    </Suspense>
   );
 };

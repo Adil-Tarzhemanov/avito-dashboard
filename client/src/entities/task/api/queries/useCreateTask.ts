@@ -6,7 +6,12 @@ export const useCreateTask = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: CreateTaskDto) => api.post('/tasks/create', data),
+    mutationFn: (data: CreateTaskDto) => {
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const promise = api.post('/tasks/create', data, { signal });
+      return promise;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },

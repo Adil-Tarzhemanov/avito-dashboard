@@ -18,8 +18,6 @@ const priorities: CreateTaskDto['priority'][] = ['Low', 'Medium', 'High'];
 
 export const TaskFormFields = ({ register, params, boards, users, isCreate }: Props) => {
   const match = matchPath('/boards/:boardId/*', location.pathname);
-  console.log('isCreate:', isCreate);
-  console.log('disabled:', !!match && isCreate);
 
   return (
     <>
@@ -47,7 +45,7 @@ export const TaskFormFields = ({ register, params, boards, users, isCreate }: Pr
         fullWidth
         margin="dense"
         select
-        disabled={!!match && !isCreate}
+        disabled={!!match}
         defaultValue={params.initialValues?.boardId}
       >
         {boards.map((board: Board) => (

@@ -15,7 +15,7 @@ export const RoutesPath: Record<AppRoutes, string> = {
   [AppRoutes.ISSUES]: '/issues',
   [AppRoutes.BOARDS]: '/boards',
   [AppRoutes.BOARD]: '/boards/:boardId',
-  [AppRoutes.NOT_FOUND]: '/notfound',
+  [AppRoutes.NOT_FOUND]: '*',
 };
 
 export const routeConfig: Record<AppRoutes | 'root', RouteObject> = {
