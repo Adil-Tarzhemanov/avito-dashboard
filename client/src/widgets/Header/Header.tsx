@@ -12,7 +12,7 @@ export const Header = () => {
         </Typography>
 
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <Button component={RouterLink} to={RoutesPath.tasks} color="inherit">
+          <Button component={RouterLink} to={RoutesPath.issues} color="inherit">
             Все задачи
           </Button>
           <Button component={RouterLink} to={RoutesPath.boards} color="inherit">

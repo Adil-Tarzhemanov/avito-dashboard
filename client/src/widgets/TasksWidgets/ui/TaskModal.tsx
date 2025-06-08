@@ -14,6 +14,7 @@ export const TaskModal = ({ params, onCancel, onSubmit }: Props) => {
     useTaskFormController(params, onSubmit);
 
   //добавить zod для валидации(длина текста и тд)
+  //navigate через windows, потому что вне роутинга
 
   return (
     <Dialog open onClose={onCancel} maxWidth="sm" fullWidth>

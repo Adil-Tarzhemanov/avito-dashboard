@@ -26,14 +26,14 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {/*<Provider store={store}>*/}
     <QueryClientProvider client={new QueryClient()}>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AppProvider>
+      <AppProvider>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
             <App />
-          </AppProvider>
-        </ThemeProvider>
-      </BrowserRouter>
+          </ThemeProvider>
+        </BrowserRouter>
+      </AppProvider>
     </QueryClientProvider>
     {/*</Provider>*/}
   </StrictMode>
