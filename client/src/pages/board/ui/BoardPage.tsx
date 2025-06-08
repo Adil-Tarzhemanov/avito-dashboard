@@ -1,18 +1,39 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Box, Typography, Paper, CircularProgress, Stack } from '@mui/material';
 import { useGetBoardTasks } from 'entities/board/api/queries/useGetBoardTasks.ts';
 import type { Task } from 'entities/task/model/types.ts';
+import { useTaskForm } from 'shared/lib/TaskFormContext.tsx';
+import { normalizeTaskToFormValues } from 'entities/task/lib/normalizeTaskToFormValues.ts';
 
 const statuses = ['Backlog', 'InProgress', 'Done'];
 const statusLabels: Record<string, string> = {
-  Backlog: 'To do',
+  Backlog: 'Backlog',
   InProgress: 'In progress',
   Done: 'Done',
 };
 
 const BoardPage = () => {
   const { boardId } = useParams();
-  const { data: boardTasks = [], isLoading, isError } = useGetBoardTasks(boardId);
+  const { data: boardTasks = [], isLoading, isError, refetch } = useGetBoardTasks(boardId);
+  const location = useLocation();
+  const boardName = location.state?.name;
+
+  const openForm = useTaskForm();
+
+  const handleEditTask = async (task: Task) => {
+    const updated = await openForm({
+      mode: 'edit',
+      origin: 'tasks',
+      initialValues: {
+        ...normalizeTaskToFormValues(task),
+        boardId: Number(boardId), // вставляем вручную так как нам при получении таксок борда прилетает без него
+      },
+    });
+
+    if (updated) {
+      await refetch();
+    }
+  };
 
   if (isLoading) {
     return (
@@ -33,7 +54,7 @@ const BoardPage = () => {
   return (
     <Box px={2} py={4}>
       <Typography variant="h4" align="center" gutterBottom>
-        Проект #{boardId}
+        {boardName}
       </Typography>
 
       <Paper variant="outlined" sx={{ p: 2, overflowX: 'auto' }}>
@@ -63,12 +84,18 @@ const BoardPage = () => {
                   .map((task: Task) => (
                     <Paper
                       key={task.id}
+                      onClick={() => handleEditTask(task)}
                       sx={{
                         p: 1.5,
                         borderRadius: 2,
                         border: '2px solid #333',
                         cursor: 'pointer',
-                        '&:hover': { boxShadow: 2 },
+                        '&:hover': {
+                          transform: 'translateY(-3px)',
+                          boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                          borderColor: 'primary.main',
+                          backgroundColor: 'background.paper',
+                        },
                       }}
                     >
                       <Typography fontWeight={600}>{task.title}</Typography>

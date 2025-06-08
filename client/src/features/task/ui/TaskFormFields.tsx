@@ -11,12 +11,15 @@ type Props = {
   params: TaskFormParams;
   boards: Board[];
   users: User[];
+  isCreate: boolean;
 };
 
 const priorities: CreateTaskDto['priority'][] = ['Low', 'Medium', 'High'];
 
-export const TaskFormFields = ({ register, params, boards, users }: Props) => {
+export const TaskFormFields = ({ register, params, boards, users, isCreate }: Props) => {
   const match = matchPath('/boards/:boardId/*', location.pathname);
+  console.log('isCreate:', isCreate);
+  console.log('disabled:', !!match && isCreate);
 
   return (
     <>
@@ -38,12 +41,13 @@ export const TaskFormFields = ({ register, params, boards, users }: Props) => {
         defaultValue={params.initialValues?.description}
       />
       <TextField
+        key={`${isCreate}-boardId`}
         {...register('boardId', { valueAsNumber: true })}
         label="Проект"
         fullWidth
         margin="dense"
         select
-        disabled={!!match}
+        disabled={!!match && !isCreate}
         defaultValue={params.initialValues?.boardId}
       >
         {boards.map((board: Board) => (

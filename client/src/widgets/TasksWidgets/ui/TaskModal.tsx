@@ -19,11 +19,17 @@ export const TaskModal = ({ params, onCancel, onSubmit }: Props) => {
     <Dialog open onClose={onCancel} maxWidth="sm" fullWidth>
       <DialogTitle>{isCreate ? 'Создание задачи' : 'Редактирование задачи'}</DialogTitle>
       <DialogContent>
-        <TaskFormFields register={register} params={params} boards={boards} users={users} />
+        <TaskFormFields
+          register={register}
+          params={params}
+          boards={boards}
+          users={users}
+          isCreate={isCreate}
+        />
       </DialogContent>
       <DialogActions>
         {params.origin === 'tasks' && !isCreate && boardId && (
-          <Button onClick={() => (window.location.href = `/board/${boardId}`)}>
+          <Button onClick={() => (window.location.href = `/boards/${boardId}`)}>
             Перейти на доску
           </Button>
         )}

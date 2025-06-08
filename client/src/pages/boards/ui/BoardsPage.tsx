@@ -3,10 +3,11 @@ import { useGetBoards } from 'entities/board/api/queries/useGetBoards';
 import { CardTitle, GridContainer, StyledCard } from 'pages/boards/ui/boardsStyles.ts';
 import type { Board } from 'entities/board/model/types.ts';
 import { stringToColor } from 'shared/lib/utils/stringToColor.ts';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const BoardsPage = () => {
   const { data: boards = [], isLoading, isError } = useGetBoards(true);
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -36,7 +37,10 @@ const BoardsPage = () => {
           const initial = board.name.charAt(0).toUpperCase();
 
           return (
-            <StyledCard key={board.id} component={Link} to={`/boards/${board.id}`}>
+            <StyledCard
+              key={board.id}
+              onClick={() => navigate(`/boards/${board.id}`, { state: { name: board.name } })}
+            >
               <Stack direction="row" alignItems="center" spacing={2} mb={1}>
                 <Avatar sx={{ bgcolor: bgColor }}>{initial}</Avatar>
                 <CardTitle variant="h6">{board.name}</CardTitle>

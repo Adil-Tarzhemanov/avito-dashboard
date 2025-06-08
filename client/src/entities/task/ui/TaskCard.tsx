@@ -26,7 +26,20 @@ export const TaskCard = ({ task }: TaskCardProps) => {
   const initial = task.boardName.charAt(0).toUpperCase();
 
   return (
-    <Card variant="outlined" sx={{ mb: 2 }} onClick={handleClick}>
+    <Card
+      variant="outlined"
+      sx={{
+        mb: 2,
+        cursor: 'pointer',
+        transition: 'transform 0.15s ease, box-shadow 0.15s ease',
+        '&:hover': {
+          transform: 'translateY(-2px)',
+          boxShadow: 4,
+          borderColor: 'primary.main',
+        },
+      }}
+      onClick={handleClick}
+    >
       <CardContent sx={{ position: 'relative' }}>
         {/* boardName в правом верхнем углу */}
         {task.boardName && (
